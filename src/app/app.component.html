@@ -1,25 +1,26 @@
-<header>
-<div class="card ">
-  <p-menubar class="m-2" [model]="items">
-      <ng-template pTemplate="start">
-          <h3>EcommerceSite</h3>
-      </ng-template>
-      <ng-template pTemplate="end">
-          <input type="text" pInputText placeholder="Search" class="w-full" />
-          
-          <button>User</button>
-          <button>Cart</button>
-      </ng-template>
-  </p-menubar>
-</div>
-</header>
-<!--Searchbar-->
-<section>
-  <div class="w-full ml-2">
-    <input type="text" pInputText placeholder="Search" class="w-30rem ml-2 " />
-  </div>
+<app-navbar></app-navbar>
+<!--Slider-->
+<img class="mainimg" src="https://www.searchenginejournal.com/wp-content/uploads/2022/08/google-shopping-ads-6304dccb7a49e-sej.png">
+
+<!--Category images-->
+<div class="mt-4 grid gap-5 ml-6">
+  <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg?size=626&ext=jpg&ga=GA1.1.87170709.1707782400&semt=sph" alt="image"/></div>
+  <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://logiconindia.com/assets/images/product-image/3.jpg" alt="image"/></div>  
+  <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://images.meesho.com/images/products/72703187/xvnnm_512.webp" alt="image"/></div>
+  <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://dynl.mktgcdn.com/p/LJs4_4rt15SQyUZvQkctRzIBXAq3Az6pNEEUPrYwAUo/1425x1900.jpg" alt="image"/></div>
+  <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/17048614/2022/2/4/b0eb9426-adf2-4802-a6b3-5dbacbc5f2511643971561167KhushalKWomenBlackEthnicMotifsAngrakhaBeadsandStonesKurtawit7.jpg" alt="image"/></div>
   
-</section>
+</div>
+<!--Categories-->
+<div class="category-buttons">
+  <div class="grid gap-5 ml-6 mb-6">
+    <div class="col-2" (click)="fetchdata()">All Categories</div>
+    <div class="col-2" *ngFor="let category of categories" (click)="loadProductsByCategory(category)">
+      <!-- <img [src]="getCategoryImage(category)" alt="{{ category }}"> -->
+      {{ category }}
+    </div>
+  </div>
+</div>
 <!--Cards section-->
 <section>
   <div class="container grid ml-8 gap-5">
@@ -32,13 +33,12 @@
             <small class="">&#8377;{{product.price}}</small>
             <p class="m-2">{{product.description | slice:0:20}} <a href="">Read More</a></p>
             <p-button class="m-8" label="Add to cart" [raised]="true" severity="warning"></p-button>
-            <p-button class="m-8" label="Add to cart" [raised]="true" severity="warning"></p-button>
+            
         </ng-template>
     </p-card>
     </div>
   </div>
-
-    
 </section>
+
 
 

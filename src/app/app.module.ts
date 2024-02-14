@@ -29,13 +29,22 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { TableModule } from 'primeng/table';
 import { filterPipe } from './pipe/filter.pipe';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CheckoutComponent,
     ProductsComponent,
-    filterPipe
+    filterPipe,
+    AboutusComponent,
+    NavbarComponent,
+    RegisterComponent,
+    LoginComponent
     
   ],
   imports: [
