@@ -1,73 +1,103 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { dataService } from '../service/data.service';
+ 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
-  items: MenuItem[] | undefined;
-  ngOnInit(): void {
+export class NavbarComponent implements OnInit { 
+  items: MenuItem[] = [];
+  userName: string = '';
+  menuType: string = 'default';
+  cartItems = 0;
+  public searchTerm !: string;
+ 
+  constructor(private router: Router, private dataService: dataService) { }
+ 
+  ngOnInit() {
+    this.updateMenu();
+ 
+    this.router.events.subscribe(() => {
+      this.updateMenu();
+    });
+  }
+ 
+  updateMenu() {
+    if (localStorage.getItem('user')) {
+      const userStore = localStorage.getItem('user');
+      const userData = userStore && JSON.parse(userStore);
+      this.userName = userData.username;
+      this.menuType = 'user';
+    } else {
+      this.menuType = 'default';
+    }
+ 
     this.items = [
       {
-          label: 'Home',
-          icon: 'pi pi-fw pi-file',
-          items: [
-              {
-                  label: 'New',
-                  icon: 'pi pi-fw pi-plus',
-                  items: [
-                      {
-                          label: 'Bookmark',
-                          icon: 'pi pi-fw pi-bookmark'
-                      },
-                      {
-                          label: 'Video',
-                          icon: 'pi pi-fw pi-video'
-                      }
-                  ]
-              },
-              {
-                  label: 'Delete',
-                  icon: 'pi pi-fw pi-trash'
-              },
-              {
-                  separator: true
-              },
-              {
-                  label: 'Export',
-                  icon: 'pi pi-fw pi-external-link'
-              }
-          ]
+        label: 'Home',
+        icon: 'pi pi-fw pi-home',
+        routerLink: ''
+      },
+      { label: 'About Us', icon: 'pi pi-fw pi-file' },
+      { label: 'Contact Us', icon: 'pi pi-fw pi-phone' },
+      {
+        label: this.getUserName(),
+        icon: 'pi pi-fw pi-user',
+        visible: this.menuType === 'user'
+      },
+      { label: 'LogOut', icon: 'pi pi-fw pi-sign-out', command: () => this.logout(), visible: this.menuType === 'user' },
+      {
+        label: 'Login/Register',
+        icon: 'pi pi-fw pi-sign-in',
+        routerLink: '/user-auth',
+        visible: this.menuType === 'default'
       },
       {
-          label: 'Pages',
-          icon: 'pi pi-fw pi-pencil',
-          items: [
-              {
-                  label: 'Left',
-                  icon: 'pi pi-fw pi-align-left'
-              },
-              {
-                  label: 'Right',
-                  icon: 'pi pi-fw pi-align-right'
-              },
-              {
-                  label: 'Center',
-                  icon: 'pi pi-fw pi-align-center'
-              },
-              {
-                  label: 'Justify',
-                  icon: 'pi pi-fw pi-align-justify'
-              }
-          ]
+        label: `Cart(${this.cartItems})`,
+        icon: 'pi pi-shopping-cart',
+ 
       },
-      ,
-      {
-          label: 'Contact Us',
-          icon: 'pi pi-fw pi-power-off'
+    ];
+ 
+    this.router.events.subscribe((val: any) => {
+      if (val.url) {
+        if (localStorage.getItem('user')) {
+          let userStore = localStorage.getItem('user');
+          let userData = userStore && JSON.parse(userStore);
+          this.userName = userData.username;
+          this.menuType = 'user';
+        }
       }
-  ];
-  }
-
-}
+    });
+    let cartData = localStorage.getItem('localCart');
+    if(cartData){
+      this.cartItems = JSON.parse(cartData).length;
+ 
+    //}
+    //this.dataService.cartData.subscribe((items)=>{
+      //this.cartItems = items.length
+    //})
+  //}
+ 
+//  getUserName(): string {
+    //return this.menuType === 'user' ? `Welcome back, ${this.userName}` : '';
+ 
+  //}
+ 
+ 
+  //logout() {
+    //localStorage.removeItem('user');
+    //this.router.navigate(['/user-auth'])
+  //}
+   
+  //search(event:any){
+    //this.searchTerm = (event.target as HTMLInputElement).value;
+    //console.log(this.searchTerm);
+   // this.dataService.search.next(this.searchTerm);
+  //}
+ 
+}}}
+ 

@@ -16,4 +16,6 @@ const route:Routes=[
     imports:[],
     exports:[RouterModule]
 })
-export class AppRoutingModule{}
+export class AppRoutingModule{
+    
+}

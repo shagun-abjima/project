@@ -28,11 +28,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { TableModule } from 'primeng/table';
-import { filterPipe } from './pipe/filter.pipe';
-import { AboutusComponent } from './aboutus/aboutus.component';
+import { filterPipe } from './pipe/filter.pipe';;
 import { NavbarComponent } from './navbar/navbar.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { AboutusComponent } from './pages/aboutus/aboutus.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { FooterComponent } from './footer/footer.component';
+import { CarouselModule } from 'primeng/carousel';
+import { LoginComponent } from './pages/login/login.component';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { LoginComponent } from './login/login.component';
     AboutusComponent,
     NavbarComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
     
   ],
   imports: [
@@ -75,7 +78,8 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    TableModule
+    TableModule,
+    CarouselModule
   ],
   exports:[
     MenubarModule,
@@ -100,7 +104,8 @@ import { LoginComponent } from './login/login.component';
     InputMaskModule,
     InputGroupModule,
     InputGroupAddonModule,
-    TableModule
+    TableModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

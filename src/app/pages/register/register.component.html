@@ -100,29 +100,4 @@
       </p-card>
       </div>
     
-      <!-- login -->
-    
-    
-      <div class="login" *ngIf="showLogin">
-        <h3 style="text-align: center; margin-top: 3%;">Login Form</h3>
-      <p-card styleClass="user-form" class="flex justify-content-center">
-        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" novalidate>
-          <div class="field">
-            <label for="email" class="block">User Email</label>
-            <input type="email" pInputText placeholder="Enter your Email" formControlName="email" />
-            <small class="p-error block" *ngIf="
-                loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
-              Email is required</small>
-          </div>
-    
-          <div class="field">
-            <label for="password" class="block">Password</label>
-            <input type="password" pInputText placeholder="Enter your Password" formControlName="password" />
-          </div>
-          <button pButton type="submit" label="Log In" [disabled]="loginForm.invalid"></button>
-          <p>Create a new Account? <a (click)="openRegister()">Click Here</a></p>
-          </form>
-      </p-card>
-    
-      </div>
-      </div>
+     
