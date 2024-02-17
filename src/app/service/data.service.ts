@@ -1,124 +1,132 @@
 import { HttpClient } from "@angular/common/http";
-import { catchError, map, of, throwError } from "rxjs";
-import { Product } from "../model/Product.model";
 import { EventEmitter, Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { signUp } from "../model/User.model";
-import { UserLogin } from "../model/userlogin.model";
-@Injectable({ providedIn: 'root' })
-export class dataService {
-    constructor(private http: HttpClient, private router: Router) { }
-//login functionality
+import { Product } from "../model/product.model";
+import { BehaviorSubject, Observable, catchError, map, of, throwError } from "rxjs";
+import { Card } from "primeng/card";
+import { cart } from "../model/user-type";
 
-    loginCheck( data:UserLogin){
-        this.http.get<UserLogin[]>('https://fakestoreapi.com/users?email=${data.email}&password=${data.password}',{observe:'response'})
-        .subscribe((res)=>{
-            if(res){
-                console.log('data receiver'+res);
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+private currentProductId = 1;
+  cartData = new EventEmitter<Product[] | []>();
+  public search = new BehaviorSubject<string>("");
+  
+  constructor(private http: HttpClient) { }
+
+  GetAllProducts() {
+    return this.http.get('https://fakestoreapi.com/products')
+      .pipe(
+        map((response) => {
+          let products: Product[] = [];
+          let productId = 1;
+
+          for (let key in response) {
+            if (response.hasOwnProperty(key)) {
+              products.push({ ...response[key], id: productId });
+              productId++;
             }
-            else{
-                console.log('data not received')
-            }
+          }
+
+          return products;
+        }),
+        catchError((err) => {
+          const errorObj = {
+            statusCode: err.status,
+            errorMessage: err.message,
+            datetime: new Date()
+          };
+          return throwError(() => err);
         })
+      );
+  }
 
-
-      }
-
-
-
-
-//signup functionality
-    invaliduserAuth = new EventEmitter<boolean>(false)
-userSignUp(user:signUp){
-    this.http.post('https://fakestoreapi.com/users',user,{observe:'response'})
-    .subscribe((result)=>{
-     if(result){
-       localStorage.setItem('user',JSON.stringify(result.body));
-       this.router.navigate(['/']);
-     }
-     
-    })
-     
-   }
-userAuthReload(){
-    if(localStorage.getItem('user')){
-        this.router.navigate(['/'])
+  getProductDetails(id: number | undefined, products: Product[]) {
+    const product = products.find(p => p.id === id);
+    if(product){
+      return of(product);
+    }else{
+    return this.http.get('https://fakestoreapi.com/products/' + id)
+      .pipe(map((response) => {
+        console.log(response)
+        let product = {};
+        product = { ...response, id: id }
+        return product;
+      }))
     }
-}
+
+  }
 
 
-
-
-//fetching all data
-    fetchProducts() {
-        return this.http.get<{ [key: string]: 
-        Product }>('https://fakestoreapi.com/products')
-            .pipe(map((response) => {
-                let products = [];
-
-                for (let key in response) {
-                    if (response.hasOwnProperty(key)) {
-                        products.push({ ...response[key], id: key })
-                    }
-
-                }
-                return products;
-            
-            }))
-
-    }
-    //product details of product by id
-
-     getProductDetails(id: string | undefined, products: Product[]) {
-        const product = products.find(p => p.id === id);
-        if(product){
-          return of(product);
-        }else{
-        return this.http.get('https://fakestoreapi.com/products/' + id)
-          .pipe(map((response) => {
-            console.log(response)
-            let product = {};
-            product = { ...response, id: id }
-            return product;
-          }))
-        }
-    
-      }
-    
-    //category vise products
-      getProductsByCategory(category: string){
-        return this.http.get('https://fakestoreapi.com/products/category/'+category)
-          .pipe(
-            map((response) => {
-              let products: Product[] = [];
-              for (let key in response) {
-                if (response.hasOwnProperty(key)) {
-                  products.push({ ...response[key], id: key });
-                }
-              }
-              return products;
-            
-            }),
+  getProductsByCategory(category: string){
+    return this.http.get('https://fakestoreapi.com/products/category/'+category)
+      .pipe(
+        map((response) => {
+          let products: Product[] = [];
+          for (let key in response) {
+            if (response.hasOwnProperty(key)) {
+              products.push({ ...response[key], id: key });
+            }
+          }
+          return products;
         
-            catchError((err) => throwError(() => err))
-          );
-      }
-    //getting the categories 
-      getAllCategories() {
-        return this.http.get('https://fakestoreapi.com/products/categories')
-          .pipe(
-            catchError((err) => throwError(() => err))
-          );
-      }
+        }),
+    
+        catchError((err) => throwError(() => err))
+      );
+  }
 
+  getAllCategories() {
+    return this.http.get('https://fakestoreapi.com/products/categories')
+      .pipe(
+        catchError((err) => throwError(() => err))
+      );
+  }
 
-
-
+  // cart functionality
+  localAddToCart(data: Product){
+    let cartData = [];
+    let localCart = localStorage.getItem('localCart');
+    if(!localCart){
+      localStorage.setItem('localCart', JSON.stringify([data]))
+    }
+    else{
+      
+      cartData = JSON.parse(localCart);
+      if (Array.isArray(cartData)) 
+      cartData.push(data)
+      localStorage.setItem('localCart', JSON.stringify(cartData))
+    }
+    this.cartData.emit(cartData)
+  }
+  
+  removeItemFromCart(id: number){
+    let cartData = localStorage.getItem('localCart');
+    if(cartData){
+      let items: Product[] = JSON.parse(cartData)
+      items = items.filter((item:Product)=>id !== item.id)
+      localStorage.setItem('localCart', JSON.stringify(items));
+      this.cartData.emit(items)
     }
 
 
+  }
+
+  addTocart(cartData: cart){
+    return this.http.post('https://fakestoreapi.com/carts', cartData)
+  }
+
+  getCartByUserId(id: number){
+    this.http.get<any>('https://fakestoreapi.com/carts').subscribe((res)=>{
+      if(res && res.body){
+        this.cartData.emit(res.body)
+      }
+    })
+  }
 
 
+}
 
 
 

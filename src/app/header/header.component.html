@@ -1,0 +1,10 @@
+<div class="card">
+    <p-menubar [model]="items">
+        <ng-template pTemplate="start">
+            <img style="margin-left: 10px;" src="https://logos-world.net/wp-content/uploads/2020/05/Zara-Emblem.jpg" height="50rem" width="100rem" />
+        </ng-template>
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="search products">
+        </div>
+    </p-menubar>
+</div>

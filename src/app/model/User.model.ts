@@ -1,22 +1,18 @@
-  export interface signUp {
-    email: string;
-    password: string;
-    username: string;
-    phone: string;
-    name: {
-      firstname: string;
-      lastname: string;
-    }
-    address: {
-      city: string;
-      street: number;
-      number: number;
-      zipcode: string;
-      geolocation: {
-        lat: string;
-        long: string;
-      }
-    }
-    id:string;
+// export class User {
+//     constructor(
+//       public email: string,
+//       public password: string,
+//       public username?: string,
+//       public name?: { firstname?: string; lastname?: string },
+//       public address?: {
+//         city?: string;
+//         street?: string;
+//         number?: number;
+//         zipcode?: string;
+//         geolocation?: { lat?: string; long?: string };
+//       },
+//       public phone?: number,
+//       public id?: string
+//     ) {}
+//   }
 
-  }

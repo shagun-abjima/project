@@ -1,8 +1,12 @@
 export class Product{
-    title:string;
-    id?:string;
-    price:string;
-    category:string;
-    description:string;
-    image:string;
+    constructor(public title: string, 
+        public price: string, 
+        public category: string, 
+        public description: string, 
+        public image: string,
+        public id: number,
+        public quantity?: number,
+        public productId?:undefined|number){
+
+    }
 }

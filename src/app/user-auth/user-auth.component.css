@@ -1,0 +1,31 @@
+:host >>> .user-form {
+    width: 30%;
+    width: 50%;
+    margin-top: 8%;
+  }
+  
+  :host >>> .p-inputtext {
+    width: 100%;
+  }
+
+  .user-auth a{
+    color: blueviolet;
+    cursor: pointer;
+  }
+
+  .form{
+    width: 20%;
+  }
+  .error-p{
+    color: red;
+  }
+ /* Order */
+@layer reset, primeng;
+
+/* Reset CSS */
+@layer reset {
+    button {
+       width: 100%;
+       
+    }
+}
