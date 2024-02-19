@@ -1,4 +1,4 @@
-<img class="mainimg" src="https://www.searchenginejournal.com/wp-content/uploads/2022/08/google-shopping-ads-6304dccb7a49e-sej.png">
+<img class="w-full mt-6" src="https://www.searchenginejournal.com/wp-content/uploads/2022/08/google-shopping-ads-6304dccb7a49e-sej.png">
 <!--Category images-->
 <div class="mt-4 grid gap-5 ml-6">
   <div class="col-2 -ml-1"><img class="img_cat border-circle" src="https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg?size=626&ext=jpg&ga=GA1.1.87170709.1707782400&semt=sph" alt="image"/></div>
@@ -13,7 +13,6 @@
   <div class="grid gap-5 ml-6 mb-6">
     <div class="col-2"  (click)="loadAllProducts()">All Categories</div>
     <div class="col-2" *ngFor="let category of categories" (click)="loadProductsByCategory(category)">
-      <!-- <img [src]="getCategoryImage(category)" alt="{{ category }}"> -->
       {{ category }}
     </div>
   </div>
@@ -21,29 +20,26 @@
 
 
 
-
+<!--products-->
 <app-product-details *ngIf="showProductDetails" (closeDetailView)="closeTaskDetails()" [currentProduct]="currentProduct"></app-product-details>
-<div class="container">
-    <h3 class="flex justify-content-center flex-wrap">Exclusive Products</h3>
-<div class="card-container">
-  <div class="container grid ml-8 gap-5">
-<div *ngFor="let product of allProducts | filter:filteredProducts: 'title'" >
+
+
+  <div class="container grid gap-5">
+<div *ngFor="let product of allProducts | filter:filteredProducts: 'title'" class="col" >
 <p-card [style]="{'width': '20rem', 'margin-bottom': '2em'}">
     <ng-template pTemplate="header">
-        <img alt="Card" class="image" [src]="product.image">
+        <img alt="ProductImage" class="w-10 h-20rem" [src]="product.image">
         <p> <b>{{product.title | slice:0:20}}</b></p>
         <p><b>Price:</b>{{product.price}}</p>
-        <p>{{product.description | slice:0:80}}....<a (click)="showCurrentProductDetails(product.id)" style="cursor: pointer; color: blue;">Read more</a></p>
-        <!-- <button pButton *ngIf="!removeCart" class="form-button" icon="pi pi-cart-plus" (click)="addToCart()" label="Add To Cart" ></button>
-        <button pButton *ngIf="removeCart" style="background-color: red;" icon="pi pi-cart-plus" (click)="removetoCart(currentProduct.id)" label="Remove To Cart" ></button> -->
+        <p>{{product.description | slice:0:80}}....<a (click)="showCurrentProductDetails(product.id)" style="color: blue;">Read more</a></p>
     </ng-template>
      
 </p-card>
 </div>
 
 </div>
-</div>
-</div>
+
+
 
 
 <app-footer></app-footer>

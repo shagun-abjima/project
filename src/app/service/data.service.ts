@@ -125,8 +125,14 @@ private currentProductId = 1;
     })
   }
 
+  currentCart(){
+    this.http.get<any>('https://fakestoreapi.com/carts').subscribe((res)=>{
+      if(res){
+      console.log("PRODUCT ADDED TO CART")       
+      }
+  })
 
 }
 
-
+}
 

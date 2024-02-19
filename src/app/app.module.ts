@@ -19,6 +19,8 @@ import { CarouselModule } from 'primeng/carousel';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AboutComponent } from './about/about.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { PlaceOrderComponent } from './place-order/place-order.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { AuthInterceptor } from './auth-interceptor';
     FooterComponent,
     ContactusComponent,
     AboutComponent,
+    CartPageComponent,
+    PlaceOrderComponent,
 
    
   ],

@@ -1,21 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 @Pipe({
-  name: 'filter'
+ name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-
-  transform(value : any[], filterString: string, propName:string): any[] {
-    const result:any =[];
-    if(!value || filterString==='' || propName ===''){
-      return value;
-    }
-    value.forEach((a:any)=>{
-      if(a[propName].trim().toLowerCase().includes(filterString.toLowerCase())){
-        result.push(a);
-      }
-    });
-    return result;
-  }
-
+ private searchSubject = new Subject<any[]>();
+ constructor() {
+   this.searchSubject.pipe(
+     debounceTime(3000), // Adjust debounce time to 3000 milliseconds (3 seconds)
+   ).subscribe();
+ }
+ transform(value: any[], filterString: string, propName: string): any[] {
+   if (!value || filterString === '' || propName === '') {
+     return value;
+   }
+   this.searchSubject.next; // Reset the timer on each keypress
+   return value.filter(item =>
+     item[propName].trim().toLowerCase().includes(filterString.trim().toLowerCase())
+   );
+ }
 }

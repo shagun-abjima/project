@@ -51,7 +51,7 @@ a {
 }
 
 .footer--light {
-  background: #001441;
+  background: #000000;
 }
 
 .footer-big .footer-menu ul li a,
@@ -75,7 +75,7 @@ a {
 }
 
 .footer-menu ul li a:hover {
-  color: #ce1a19;
+  color: rgb(255, 255, 255);
 }
 
 .footer-widget-title {
@@ -86,7 +86,7 @@ a {
 }
 
 .mini-footer {
-  background: #000041;
+  background: #000000;
   text-align: center;
   padding: 32px 0;
 }
@@ -99,7 +99,7 @@ a {
 }
 
 .mini-footer p a {
-  color: #ce1a19;
+  color: #ffffff;
   font-weight: 500;
 }
 

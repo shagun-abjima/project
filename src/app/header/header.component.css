@@ -15,20 +15,6 @@
     text-decoration: none;
 
 }
-
-:host ::ng-deep .p-menu-list:hover {
-    background-color: green;
-
-
-}
-
-:host ::ng-deep .p-menuitem-text:hover {
-    color: black;
-
-
-
-}
-
 :host::ng-deep .p-menuitem-icon {
     color: white;
 }
